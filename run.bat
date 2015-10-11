@@ -1,3 +1,12 @@
+rem system for stock speculation
+rem
+rem download stock file with qsc utility
+qsc %1 > temp.txt
+set /p qscres=<temp.txt
+if %qscres% neq OK goto :EOF
+
+rem processing the file and plot
+
 gawk -f reverse.awk qqq.csv > qqq2.csv
 gawk -f clx.awk qqq2.csv > q.plt
 gawk -f hh.awk qqq2.csv > hh2.csv

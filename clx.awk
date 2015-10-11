@@ -8,7 +8,7 @@ BEGIN {
     hmax = 0
     lmin = 10000
     N=10
-    start_time = "2014-10-21"
+    start_time = "2015-05-11"
     s_date = start_time
     gsub( /-/, " ", s_date ); 
     s_date = s_date " " 00 " " 00 " " 00; 
@@ -31,6 +31,11 @@ BEGIN {
         if($3 > hmax) {
             hmax = $3
         }
+
+        if($6 > vmax) {
+            vmax = $6
+        }
+ 
         if($4 < lmin) {
             lmin = $4
         }
@@ -78,7 +83,15 @@ END {
     print " 'll2.csv' using 1:2 notitle, 'hh2.csv' using 1:2 notitle, \\"
     print " 'ill2.csv' using 1:2 notitle, 'ihh2.csv' using 1:2 notitle, \\"
     print " 'lll2.csv' using 1:2 notitle pt 7 ps 2 lc \"green\", 'lhh2.csv' using 1:2 notitle pt 7 ps 2 "
-  
+
+    l = int(vmax/1000000/3); # 1 m 
+    if(l == 0) {
+         l = 0.5 
+         print "set format y \"%1.2f\""
+    } 
+    else {
+        print "set format y \"%1.0f\""
+    }
 
     print "unset label"
     print "unset title"
@@ -86,9 +99,8 @@ END {
     print "set origin 0, 0.0"
     print "unset logscale y"
     print "set autoscale y"
-    print "set format y \"%1.0f\""
-    print "set ytics 1000"
-    print "plot 'qqq2.csv' using 1:($6/1000):($5 < $2 ? -1 : 1) notitle with boxes palette lt 3"
+    print "set ytics " l
+    print "plot 'qqq2.csv' using 1:($6/1000000):($5 < $2 ? -1 : 1) notitle with boxes palette lt 3"
 
     print "unset multiplot"
 }
