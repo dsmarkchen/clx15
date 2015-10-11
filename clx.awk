@@ -43,6 +43,7 @@ END {
     print "set grid"
     print "set datafile separator \",\""
     print "set label \"dsmarkchen\\\\@gmail.com\" at graph 0.01, 0.07"
+    print "set rmargin 5"  # make x-axis label not cropped
 
     print "set palette defined (-1 'red', 1 'green')"
     print "set cbrange [-1:1]"

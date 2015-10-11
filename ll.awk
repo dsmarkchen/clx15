@@ -12,7 +12,7 @@ BEGIN {
 
 }
 {
-    print $4
+    if (!($4 ~ /[0-9]/)) next
     if(la == 0) {
         la = $4
         ta = $1    
