@@ -8,7 +8,7 @@ BEGIN {
     hmax = 0
     lmin = 10000
     N=10
-    start_time = "2015-03-31"
+    start_time = "2014-10-21"
     s_date = start_time
     gsub( /-/, " ", s_date ); 
     s_date = s_date " " 00 " " 00 " " 00; 
@@ -37,7 +37,10 @@ BEGIN {
     }
 }
 END {
-#    print int(lmin) "##" int(hmax + 0.5)
+    print "set multiplot"
+    print "set size 1, 0.7"
+    print "set origin 0, 0.3"
+    print "set lmargin 7"  
 
 
     print "set grid"
@@ -75,5 +78,17 @@ END {
     print " 'll2.csv' using 1:2 notitle, 'hh2.csv' using 1:2 notitle, \\"
     print " 'ill2.csv' using 1:2 notitle, 'ihh2.csv' using 1:2 notitle, \\"
     print " 'lll2.csv' using 1:2 notitle pt 7 ps 2 lc \"green\", 'lhh2.csv' using 1:2 notitle pt 7 ps 2 "
+  
 
+    print "unset label"
+    print "unset title"
+    print "set size 1.0, 0.3"
+    print "set origin 0, 0.0"
+    print "unset logscale y"
+    print "set autoscale y"
+    print "set format y \"%1.0f\""
+    print "set ytics 1000"
+    print "plot 'qqq2.csv' using 1:($6/1000):($5 < $2 ? -1 : 1) notitle with boxes palette lt 3"
+
+    print "unset multiplot"
 }
