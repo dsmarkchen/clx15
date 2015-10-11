@@ -1,4 +1,4 @@
-# find high and low
+# find low in low
 
 # input format: tradingDay,open,high,low,close,volume
  
