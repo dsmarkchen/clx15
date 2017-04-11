@@ -97,7 +97,7 @@ END {
     print " 'ill2.csv' using 1:2 notitle axes x1y2, 'ihh2.csv' using 1:2 notitle axes x1y2, \\"
     print " 'lll2.csv' using 1:2 notitle pt 7 ps 2 lc \"green\" axes x1y2, 'lhh2.csv' using 1:2 notitle pt 7 ps 2 axes x1y2, \\"
     print " 'bbands20.csv' using 1:4 notitle with lines linecolor rgb \"#3CB371\" axes x1y2, 'bbands20.csv' using 1:2 notitle with lines linecolor rgb \"#3CB371\" axes x1y2, 'bbands20.csv' using 1:5 notitle with lines linecolor rgb \"#3CB371\" axes x1y2,\\" 
-    print " 'ma50.csv' using 1:3 title \"EMA50\" with lines axes x1y2, \\" 
+    print " 'ma100.csv' using 1:3 title \"EMA100\" with lines axes x1y2, \\" 
     print " 'ma200.csv' using 1:3 title \"EMA200\" with lines axes x1y2, " 
    # print " 'ma2.csv' using 1:2 title \"SMA20\" with lines axes x1y2, 'ma2.csv' using 1:3 title \"EMA20\" with lines axes x1y2" 
 

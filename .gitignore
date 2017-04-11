@@ -1,0 +1,7 @@
+*.csv
+*.png
+qsc.old/*
+*.plt
+temp.txt
+stockname
+qsc.exe
