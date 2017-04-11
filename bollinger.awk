@@ -6,8 +6,9 @@
 BEGIN {
     FS = ","
     n = 0
-     
-    offset_var = 20      
+     ratio = 2
+
+     offset_var = 13 # 20      
 
 }
 {
@@ -36,6 +37,6 @@ END {
 
  
     for(i=0; i<n;i++) {
-        print t[i] ","  mbands[i] "," stddev[i] "," mbands[i] + stddev[i]*2 "," mbands[i] - stddev[i]*2
+        print t[i] ","  mbands[i] "," stddev[i] "," mbands[i] + stddev[i]*ratio "," mbands[i] - stddev[i]*ratio
     }
 } 

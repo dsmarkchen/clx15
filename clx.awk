@@ -1,20 +1,21 @@
 # generate gnuplot file based on input finace data
-
+# arguments _start_time = "2015-08-20"
 # input
 # input format: tradingDay,open,high,low,close,volume
 
 BEGIN {
     FS = ","
 
-#    _enable_willr = 1
+#    _enable_willr = 0
 #    _enable_vol = 0
+#    _enable_stoch = 1
 
-    if(_enable_willr && _enable_vol) exit
+    if(_enable_willr && _enable_vol && _enable_stoch) exit
 
     hmax = 0
     lmin = 10000
     N=10
-    start_time = "2015-06-18"
+    start_time = _start_time;# "2015-06-18"
     s_date = start_time
     gsub( /-/, " ", s_date ); 
     s_date = s_date " " 00 " " 00 " " 00; 
@@ -48,12 +49,14 @@ BEGIN {
     }
 }
 END {
-    print "set term png size 920,680 enhanced font 'Verdana,10'"
+    print "set term png size 1580,960 enhanced font 'Verdana,10'"
     print "set output '" _stock  _enable_willr _enable_vol ".png'"    
     print "set multiplot"
     print "set size 1, 0.7"
     print "set origin 0, 0.3"
     print "set lmargin 7"  
+    print "set tmargin 3"  
+    print "set bmargin 0"  
 
 
     print "set grid x y2"
@@ -74,7 +77,7 @@ END {
     print "set xtics format \" \""   #"set xtics format \"%b %d\""
     print "set title \"" s_stockname " Daily Plot\""
 
-    print "set xrange [\"" start_time "\":*]"
+    print "set xrange [\"" start_time "\":\"" strftime("%Y-%m-%d")  "\"]"
 
     l = int(lmin);
     l0 = l;
@@ -93,8 +96,10 @@ END {
     print " 'll2.csv' using 1:2 notitle axes x1y2, 'hh2.csv' using 1:2 notitle axes x1y2, \\"
     print " 'ill2.csv' using 1:2 notitle axes x1y2, 'ihh2.csv' using 1:2 notitle axes x1y2, \\"
     print " 'lll2.csv' using 1:2 notitle pt 7 ps 2 lc \"green\" axes x1y2, 'lhh2.csv' using 1:2 notitle pt 7 ps 2 axes x1y2, \\"
-    print " 'ma100.csv' using 1:2 title \"SMA100\" with lines axes x1y2, 'ma100.csv' using 1:3 title \"EMA100\" with lines axes x1y2,\\" 
-    print " 'ma2.csv' using 1:2 title \"SMA20\" with lines axes x1y2, 'ma2.csv' using 1:3 title \"EMA20\" with lines axes x1y2" 
+    print " 'bbands20.csv' using 1:4 notitle with lines linecolor rgb \"#3CB371\" axes x1y2, 'bbands20.csv' using 1:2 notitle with lines linecolor rgb \"#3CB371\" axes x1y2, 'bbands20.csv' using 1:5 notitle with lines linecolor rgb \"#3CB371\" axes x1y2,\\" 
+    print " 'ma50.csv' using 1:3 title \"EMA50\" with lines axes x1y2, \\" 
+    print " 'ma200.csv' using 1:3 title \"EMA200\" with lines axes x1y2, " 
+   # print " 'ma2.csv' using 1:2 title \"SMA20\" with lines axes x1y2, 'ma2.csv' using 1:3 title \"EMA20\" with lines axes x1y2" 
 
     l = int(vmax/1000000/3); # 1 m 
     if(l == 0) {
@@ -109,13 +114,23 @@ END {
     print "unset title"
     print "set size 1.0, 0.3"
     print "set origin 0, 0.0"
+    print "set tmargin 0.2"  
+    print "set bmargin 2"  
     print "set xtics format \"%b %d\""
-   if(_enable_willr) {
+   if(_enable_stoch) {
         print "unset ytics "
         print "unset yrange"
-        print "set title \" William Percentage Range\"" " offset 0,-1"
+        print "set y2range [-0:100]"
+        print "set y2tics (20,80) " 
+        print "set label \"stoch (14, 3, 3)\" at graph 0.01, 0.88"
+        print "plot 'stoch13.csv' using 1:($2) smooth uniq notitle axes x1y2 with lines, 'stoch13.csv' using 1:3 notitle linecolor rgb \"red\" axes x1y2 with lines"
+    }
+    if(_enable_willr) {
+        print "unset ytics "
+        print "unset yrange"
+       # print "set title \" William Percentage Range\"" " offset 0,-1"
         print "set y2range [-100:0]"
-        print "set y2tics 20 " 
+        print "set y2tics (-20,-80) " 
         print "plot 'willr2.csv' using 1:2 notitle axes x1y2 with lines"
 
     }

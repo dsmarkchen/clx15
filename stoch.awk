@@ -7,12 +7,12 @@ BEGIN {
     FS = ","
     n = 0
      
-    offset_var =  13  
-    slow_var = 3   
+#    offset_var =  14  
+#    slow_var = 3   
 
 }
 {
-    if (!($5 ~ /[0-9]/)) next
+    if (!($2 ~ /[0-9]/)) next
     t[n] = $1
     h[n] = $3   # high
     l[n] = $4   # low
@@ -26,7 +26,7 @@ END {
     }
 
     for (i = offset_var -1 ; i < n; i++) {
-        min = 100;
+        min = 10000;
         max = 0
         for (j = 0; j < offset_var ; j++) {
             if(min > l[i-(offset_var - 1) + j]) min = l[i-(offset_var - 1) + j];
@@ -38,11 +38,13 @@ END {
         hl[i] = max - min
         
         perK[i] = cl[i]/hl[i] * 100
-        
+       
+        hh[i] = max
+        ll[i] = min 
 
     }
     #for(i=0; i<n;i++) {
-    #    print "xxx " t[i] ","  perK[i] "," cl[i] ", " hl[i] 
+    #    print "xxx " t[i] ","  perK[i] "," cl[i] ", " hl[i] "," hh[i], "," ll[i]
     #}
   
     for (i=offset_var - 1 + slow_var -1  ; i < n; i++) {
